@@ -128,6 +128,7 @@ default values.
     |g:startify_session_before_save|
     |g:startify_session_delete_buffers|
     |g:startify_session_dir|
+    |g:startify_session_keep_options|
     |g:startify_session_number|
     |g:startify_session_persistence|
     |g:startify_session_remove_lines|
@@ -358,7 +359,17 @@ Delete all buffers when loading or closing a session:
     - When choosing a session from the Startify buffer.
 
 NOTE: Buffers with unsaved changes are silently ignored.
+------------------------------------------------------------------------------
+                                               *g:startify_session_keep_options*
+>
+    let g:startify_session_keep_options = 0
+<
+Whether to not automatically remove 'options' from |'sessionoptions'| when
+using |startify-:SSave|.
 
+NOTE: This might break several other plugins but also fix a few issues! Tuning
+this option should be followed by a thorough inspection of the behaviour of
+the editor afterwards!
 ------------------------------------------------------------------------------
                                                       *g:startify_change_to_dir*
 >
@@ -958,10 +969,15 @@ I have broken colors when using sessions!~
 
 Nothing this plugin could do about. Try playing around with 'sessionoptions'.
 
-NOTE: Startify removes 'options' from the session options automatically,
-because it's the source of many problems.
+NOTE: Startify by default removes 'options' from the session options
+automatically, because it's the source of many problems. However, it might
+help to reenable saving 'options' by setting |g:startify_session_keep_options|.
+Be careful as this might break other things!
+>
+    let g:startify_session_keep_options = 1
+<
 
-Some people swear it works for them with these settings:
+Some other people swear it works for them with these settings:
 >
     set sessionoptions=blank,curdir,folds,help,tabpages,winpos
 <

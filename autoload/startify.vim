@@ -297,7 +297,10 @@ function! startify#session_write(session_path)
   endfor
 
   let ssop = &sessionoptions
-  set sessionoptions-=options
+  if !g:startify_session_keep_options
+    set sessionoptions-=options
+  endif
+
   try
     execute 'mksession!' a:session_path
   catch
@@ -1157,6 +1160,7 @@ let g:startify_enable_special = get(g:, 'startify_enable_special', 1)
 let g:startify_relative_path = get(g:, 'startify_relative_path') ? ':~:.' : ':p:~'
 let s:session_dir = startify#get_session_path()
 let g:startify_transformations = get(g:, 'startify_transformations', [])
+let g:startify_session_keep_options = get(g:, 'startify_session_keep_options', 0)
 
 let g:startify_skiplist = extend(get(g:, 'startify_skiplist', []), [
       \ 'runtime/doc/.*\.txt$',
